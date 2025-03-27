@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #d0e8f2;
+  font-family: "Segoe UI", sans-serif;
+  color: #222;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 헤더 텍스트 */
+.header {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* 검색창 */
+.search-box input {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-bottom: 2rem;
+  width: 300px;
+  text-align: center;
+  background-color: #fff;
+  color: #222;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input::placeholder {
+  color: #777;
+}
+
+/* 날씨 카드 */
+.weather-card {
+  background-color: #2d2d2d;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.weather-card img {
+  width: 100px;
+  height: 100px;
+}
+
+.weather-card h2 {
+  margin: 1rem 0 0.5rem;
+  font-weight: bold;
+}
+
+.loading {
+  margin-top: 2rem;
+  color: #333;
+}
