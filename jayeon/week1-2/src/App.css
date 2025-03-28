@@ -70,3 +70,9 @@ body {
   margin-top: 2rem;
   color: #333;
 }
+
+.error-msg {
+  color: red;
+  margin-top: 1rem;
+  font-weight: bold;
+}

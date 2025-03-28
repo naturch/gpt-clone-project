@@ -13,15 +13,44 @@ interface WeatherData {
 }
 
 function App() {
-  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [city, setCity] = useState("Seoul");
+  const [weather, setWeather] = useState<WeatherData | null>(null); //날씨 데이터 저장
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      fetchWeather();
+    }
+  };
+
+  const fetchWeather = () => {
+    setIsLoading(true);
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=be18980909483aae6aeb8c3edc66a9c4&units=metric&lang=kr`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=be18980909483aae6aeb8c3edc66a9c4&units=metric&lang=kr`
     )
       .then((res) => res.json())
-      .then((data) => setWeather(data))
-      .catch((err) => console.error("날씨 정보를 불러오는 중 오류 발생:", err));
+      .then((data) => {
+        if (data.cod == "404") {
+          setWeather(null);
+          setErrorMsg("검색 결과를 찾을 수 없다. 다시 입력해라.");
+        } else {
+          setWeather(data);
+          setErrorMsg("");
+        }
+      })
+      .catch((err) => {
+        setWeather(null);
+        setErrorMsg("오류가 발생했다. 나중에 다시 시도해라.");
+        console.error("날씨 정보를 불러오는 중 오류 발생", err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+  //페이지 로드시 첫 실행
+  useEffect(() => {
+    fetchWeather();
   }, []);
 
   return (
@@ -29,10 +58,19 @@ function App() {
       <header className="header">오늘의 날씨는?</header>
 
       <div className="search-box">
-        <input type="text" placeholder="도시를 입력하세요..." disabled />
+        <input
+          type="text"
+          placeholder="도시를 입력하세요."
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="search=box"
+        />
       </div>
+      {isLoading && <p className="loading">날씨 정보를 불러오는 중 ..</p>}
+      {errorMsg && <p className="error-msg">{errorMsg}</p>}
 
-      {weather ? (
+      {weather && !errorMsg && !isLoading && (
         <div className="weather-card">
           <img
             src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
@@ -42,8 +80,6 @@ function App() {
           <p>온도: {weather.main.temp}°C</p>
           <p>상태: {weather.weather[0].description}</p>
         </div>
-      ) : (
-        <p className="loading">날씨 정보를 불러오는 중...</p>
       )}
     </div>
   );
