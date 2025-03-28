@@ -13,7 +13,19 @@ interface WeatherData {
 }
 
 function App() {
-  const [city, setCity] = useState("Seoul");
+  const cityDict: { [key: string]: string } = {
+    서울: "Seoul",
+    부산: "Busan",
+    대구: "Daegu",
+    인천: "Incheon",
+    광주: "Gwangju",
+    대전: "Daejeon",
+    울산: "Ulsan",
+    수원: "Suwon",
+    창원: "Changwon",
+    고양: "Goyang",
+  };
+  const [city, setCity] = useState("서울");
   const [weather, setWeather] = useState<WeatherData | null>(null); //날씨 데이터 저장
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -26,14 +38,17 @@ function App() {
 
   const fetchWeather = () => {
     setIsLoading(true);
+    const englishCity = cityDict[city] || city;
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=be18980909483aae6aeb8c3edc66a9c4&units=metric&lang=kr`
+      `https://api.openweathermap.org/data/2.5/weather?q=${englishCity}&appid=be18980909483aae6aeb8c3edc66a9c4&units=metric&lang=kr`
     )
       .then((res) => res.json())
       .then((data) => {
         if (data.cod == "404") {
           setWeather(null);
-          setErrorMsg("검색 결과를 찾을 수 없다. 다시 입력해라.");
+          setErrorMsg(
+            "검색 결과를 찾을 수 없습니다. 제대로 입력했는지 확인해주세요."
+          );
         } else {
           setWeather(data);
           setErrorMsg("");
@@ -41,7 +56,7 @@ function App() {
       })
       .catch((err) => {
         setWeather(null);
-        setErrorMsg("오류가 발생했다. 나중에 다시 시도해라.");
+        setErrorMsg("오류가 발생했습니다. 다시 시도해주세요.");
         console.error("날씨 정보를 불러오는 중 오류 발생", err);
       })
       .finally(() => {
@@ -60,7 +75,7 @@ function App() {
       <div className="search-box">
         <input
           type="text"
-          placeholder="도시를 입력하세요."
+          placeholder="도시를 입력하세요 !"
           value={city}
           onChange={(e) => setCity(e.target.value)}
           onKeyDown={handleKeyDown}
