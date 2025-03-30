@@ -1,3 +1,4 @@
+/* 기본 설정 */
 body {
   margin: 0;
   padding: 0;
@@ -21,7 +22,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/*검색창*/
+/* 검색창 */
 .search-box {
   display: flex;
   justify-content: center;
@@ -57,6 +58,7 @@ body {
   background-color: #6495c6;
 }
 
+/* 메인 레이아웃 */
 .main-content {
   display: flex;
   justify-content: center;
@@ -65,7 +67,7 @@ body {
   position: relative;
 }
 
-/*왼쪽 개구리 카드*/
+/* 왼쪽 날씨상태 카드 */
 .left-card {
   position: fixed;
   bottom: 5vh;
@@ -89,7 +91,7 @@ body {
   text-align: left;
 }
 
-/*중앙 날씨카드*/
+/* 중앙 날씨 카드 */
 .weather-card {
   background-color: #2d2d2d;
   color: white;
@@ -130,6 +132,7 @@ body {
   font-size: 0.9rem;
 }
 
+/* 에러 및 로딩 */
 .error-msg {
   color: red;
   font-weight: bold;
@@ -140,7 +143,7 @@ body {
   margin-top: 1rem;
 }
 
-/* 오른쪽 시간별 날씨 카드 */
+/* 오른쪽 시간별 예보 카드 */
 .forecast-card {
   position: fixed;
   top: 50%;
@@ -156,7 +159,7 @@ body {
   flex-direction: column;
   align-items: center;
   z-index: 10;
-  overflow: hidden; /* 내부 넘침 방지 */
+  overflow: hidden;
 }
 
 .forecast-title {
@@ -170,7 +173,7 @@ body {
   flex-direction: column;
   gap: 0.5rem;
   max-height: 300px;
-  overflow-y: auto; /* 세로 스크롤 */
+  overflow-y: auto;
   padding-right: 0.5rem;
 }
 
@@ -196,7 +199,8 @@ body {
   height: 22px;
   margin-right: 0.5rem;
 }
-/*자동완성 기능*/
+
+/* 자동완성 리스트 */
 .suggestion-list {
   position: absolute;
   top: 100%;
