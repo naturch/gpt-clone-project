@@ -6,15 +6,13 @@ body {
   color: #222;
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
 .container {
   width: 100%;
-  max-width: 1000px;
   text-align: center;
-  margin-top: 2rem;
 }
 
 .header {
@@ -58,68 +56,18 @@ body {
 .main-content {
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
+  align-items: flex-start;
   width: 100%;
-  height: 350px;
-  margin-top: 2rem;
+  position: relative;
 }
 
-/* 카드1 */
-.weather-card {
-  background-color: #2d2d2d;
-  color: white;
-  padding: 2rem;
-  border-radius: 20px;
-  width: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.weather-card img {
-  width: 70px;
-  height: 70px;
-}
-
-.weather-card h2 {
-  margin-top: 1rem;
-  font-size: 1.4rem;
-}
-
-.temperature {
-  margin-top: 1rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.feels-like {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-left: 0.3rem;
-  display: block;
-  margin-top: 0.3rem;
-}
-
-.details-box {
-  margin-top: 1rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #555;
-  font-size: 0.9rem;
-  text-align: center;
-}
-
-/* 카드2 */
 .left-card {
   position: fixed;
-  left: 1rem;
-  bottom: 1rem;
+  bottom: 5vh;
+  left: 3vw;
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  z-index: 0;
 }
 
 .frog-icon {
@@ -132,10 +80,48 @@ body {
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   text-align: left;
-  max-width: 180px;
-  word-wrap: break-word;
+}
+
+.weather-card {
+  background-color: #2d2d2d;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 20px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.weather-card img {
+  width: 80px;
+  height: 80px;
+}
+
+.weather-card h2 {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+}
+
+.temperature {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.feels-like {
+  font-weight: bold;
+  font-size: 1.05rem;
+  margin-left: 0.3rem;
+}
+
+.details-box {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #555;
+  font-size: 0.9rem;
 }
 
 .error-msg {
@@ -146,4 +132,61 @@ body {
 
 .loading {
   margin-top: 1rem;
+}
+
+/* 오른쪽 시간별 날씨 카드 */
+.forecast-card {
+  position: fixed;
+  top: 50%;
+  right: 2vw;
+  transform: translateY(-50%);
+  background: white;
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  width: 200px;
+  max-height: 400px; /* 카드 전체 높이 제한 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  overflow: hidden; /* 내부 넘침 방지 */
+}
+
+.forecast-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.forecast-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 300px; /* 높이 고정 */
+  overflow-y: auto; /* 세로 스크롤 */
+  padding-right: 0.5rem; /* 스크롤바 안겹치게 */
+}
+
+.forecast-scroll {
+  overflow-y: auto;
+  flex: 1; /* 남은 공간 모두 차지 */
+  width: 100%;
+}
+
+.forecast-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fffbe6;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.forecast-item img {
+  width: 25px;
+  height: 22px;
+  margin-right: 0.5rem;
 }

@@ -19,7 +19,7 @@ const cityMap: Record<string, string> = {
 };
 
 const getWeatherComment = (description: string) => {
-  if (description.includes("비")) return "우산 챙겼어 ?";
+  if (description.includes("비")) return "우산 챙겼어?";
   if (description.includes("맑음")) return "햇살 가득 좋은 하루!";
   if (description.includes("흐림") || description.includes("구름"))
     return "약간 우중충하네 ☁️";
@@ -43,38 +43,51 @@ interface WeatherData {
   }[];
 }
 
+interface ForecastItem {
+  dt: number;
+  dt_txt: string;
+  main: {
+    temp: number;
+  };
+  weather: {
+    icon: string;
+  }[];
+}
+
 function App() {
   const [city, setCity] = useState("서울");
   const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [forecast, setForecast] = useState<ForecastItem[]>([]);
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchWeather();
-  }, []);
+  const API_KEY = "be18980909483aae6aeb8c3edc66a9c4";
 
   const fetchWeather = async () => {
     const translatedCity = cityMap[city] || city;
     setIsLoading(true);
-
     try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather`,
-        {
-          params: {
-            q: translatedCity,
-            appid: "be18980909483aae6aeb8c3edc66a9c4",
-            units: "metric",
-            lang: "kr",
-          },
-        }
-      );
+      const [currentRes, forecastRes] = await Promise.all([
+        axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${translatedCity}&appid=${API_KEY}&units=metric&lang=kr`
+        ),
+        axios.get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${translatedCity}&appid=${API_KEY}&units=metric&lang=kr`
+        ),
+      ]);
 
-      setWeather(response.data);
+      setWeather(currentRes.data);
+      // 현재 시각 이후의 예보만 필터링
+      const now = new Date();
+      const filtered = forecastRes.data.list.filter(
+        (item: ForecastItem) => new Date(item.dt_txt) > now
+      );
+      setForecast(filtered.slice(0, 8)); // 최대 8개까지만 보기
       setErrorMsg("");
-    } catch (error: any) {
+    } catch (err: any) {
       setWeather(null);
-      if (error.response?.status === 404) {
+      setForecast([]);
+      if (err.response?.status === 404) {
         setErrorMsg("검색 결과를 찾을 수 없습니다. 다시 입력해주세요.");
       } else {
         setErrorMsg("오류가 발생했습니다. 다시 시도해주세요.");
@@ -89,6 +102,10 @@ function App() {
       fetchWeather();
     }
   };
+
+  useEffect(() => {
+    fetchWeather();
+  }, []);
 
   return (
     <div className="container">
@@ -113,8 +130,8 @@ function App() {
       )}
 
       <div className="main-content">
-        {/* 왼쪽 - 날씨 카드2 */}
-        {weather && !errorMsg && !isLoading && (
+        {/* 카드2 - 왼쪽 개구리 */}
+        {weather && (
           <div className="left-card">
             <div className="frog-icon">🐸</div>
             <div className="speech-bubble">
@@ -126,24 +143,41 @@ function App() {
           </div>
         )}
 
-        {/* 가운데 - 날씨 카드1 */}
-        {weather && !errorMsg && !isLoading && (
+        {/* 카드1 - 가운데 날씨 정보 */}
+        {weather && (
           <div className="weather-card">
             <img
               src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
               alt="날씨 아이콘"
             />
             <h2>{weather.name}</h2>
-            <p className="temperature">
-              온도: {weather.main.temp}°C{" "}
-              <span className="feels-like">
-                🌡️ 체감 온도: {weather.main.feels_like}°C
-              </span>
+            <p className="temperature">온도: {weather.main.temp}°C</p>
+            <p className="feels-like">
+              🌡️ 체감 온도: {weather.main.feels_like}°C
             </p>
-
             <div className="details-box">
               <p>습도: {weather.main.humidity}%</p>
               <p>바람: {weather.wind.speed} m/s</p>
+            </div>
+          </div>
+        )}
+
+        {/* 카드3 - 오른쪽 시간별 예보 */}
+        {forecast.length > 0 && (
+          <div className="forecast-card">
+            <h3>시간별 예보</h3>
+            <div className="forecast-list">
+              {forecast.map((item) => (
+                <div key={item.dt} className="forecast-item">
+                  <img
+                    src={`https://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
+                    alt="아이콘"
+                  />
+                  <span>{new Date(item.dt_txt).getHours()}시 </span>
+                  {""}
+                  <span>{item.main.temp}°C</span>
+                </div>
+              ))}
             </div>
           </div>
         )}
