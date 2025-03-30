@@ -21,6 +21,7 @@ body {
   margin-bottom: 1rem;
 }
 
+/*검색창*/
 .search-box {
   display: flex;
   justify-content: center;
@@ -34,9 +35,9 @@ body {
   font-size: 1rem;
   width: 250px;
   border: 1px solid #ccc;
-  border-radius: 8px 8px 0 0; /* 🔼 위만 둥글게 */
+  border-radius: 8px 8px 0 0;
   outline: none;
-  z-index: 1000; /* 리스트 위에 살짝 겹쳐도 OK */
+  z-index: 1000;
   position: relative;
 }
 
@@ -64,6 +65,7 @@ body {
   position: relative;
 }
 
+/*왼쪽 개구리 카드*/
 .left-card {
   position: fixed;
   bottom: 5vh;
@@ -87,6 +89,7 @@ body {
   text-align: left;
 }
 
+/*중앙 날씨카드*/
 .weather-card {
   background-color: #2d2d2d;
   color: white;
@@ -148,7 +151,7 @@ body {
   border-radius: 20px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
   width: 200px;
-  max-height: 400px; /* 카드 전체 높이 제한 */
+  max-height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -166,14 +169,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-height: 300px; /* 높이 고정 */
+  max-height: 300px;
   overflow-y: auto; /* 세로 스크롤 */
-  padding-right: 0.5rem; /* 스크롤바 안겹치게 */
+  padding-right: 0.5rem;
 }
 
 .forecast-scroll {
   overflow-y: auto;
-  flex: 1; /* 남은 공간 모두 차지 */
+  flex: 1;
   width: 100%;
 }
 
@@ -193,12 +196,12 @@ body {
   height: 22px;
   margin-right: 0.5rem;
 }
-
+/*자동완성 기능*/
 .suggestion-list {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%; /* 🔥 input 너비에 맞추기 */
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -207,7 +210,7 @@ body {
   border-top: none;
   z-index: 999;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 0 0 8px 8px; /* 🔽 아래만 둥글게 */
+  border-radius: 0 0 8px 8px;
 }
 
 .suggestion-item {

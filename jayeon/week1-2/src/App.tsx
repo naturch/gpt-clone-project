@@ -19,13 +19,10 @@ const cityMap: Record<string, string> = {
   강릉: "Gangneung",
   고양: "Goyang",
   과천: "Gwacheon",
-  광명: "Gwangmyeong",
   구리: "Guri",
   군산: "Gunsan",
-  김포: "Gimpo",
   김해: "Gimhae",
   남양주: "Namyangju",
-  동두천: "Dongducheon",
   목포: "Mokpo",
   미사리: "Misari",
   보령: "Boryeong",
@@ -33,16 +30,12 @@ const cityMap: Record<string, string> = {
   사천: "Sacheon",
   성남: "Seongnam",
   속초: "Sokcho",
-  시흥: "Siheung",
   안동: "Andong",
   안산: "Ansan",
   안양: "Anyang",
   양산: "Yangsan",
   여수: "Yeosu",
-  영등포: "Yeongdeungpo",
   원주: "Wonju",
-  의정부: "Uijeongbu",
-  이천: "Icheon",
   익산: "Iksan",
   정읍: "Jeongeup",
   제천: "Jecheon",
@@ -122,6 +115,7 @@ function App() {
         (item: ForecastItem) => new Date(item.dt_txt) > now
       );
       setForecast(filtered.slice(0, 8)); // 최대 8개까지만 보기
+
       setErrorMsg("");
     } catch (err: any) {
       setWeather(null);
@@ -138,6 +132,7 @@ function App() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      setSuggestions([]);
       fetchWeather();
     }
   };
@@ -175,7 +170,13 @@ function App() {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
-        <button onClick={fetchWeather} className="search-button">
+        <button
+          onClick={() => {
+            setSuggestions([]);
+            fetchWeather();
+          }}
+          className="search-button"
+        >
           🔍
         </button>
 
