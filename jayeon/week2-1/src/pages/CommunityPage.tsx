@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const CommunityPage: React.FC = () => {
   return (
     <Wrapper>
-      <h1>💬 Community Page (커뮤니티)</h1>
+      <h1>💬 Community Page</h1>
     </Wrapper>
   );
 };
