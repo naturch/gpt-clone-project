@@ -1,34 +1,10 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-const Input = styled.input`
-  padding: 12px;
-  width: 300px;
-
-  font-size: 1rem;
-`;
-
-const Button = styled.button`
-  padding: 12px 18px;
-  background: #6c63ff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 15px;
-  cursor: pointer;
-
-  &:hover {
-    background: #574bff;
-  }
-`;
+import React, { useEffect, useState } from "react";
+import {
+  SearchContainer,
+  SearchBox,
+  Input,
+  Button,
+} from "../styles/SearchBarStyle";
 
 interface Props {
   onSearch: (breed: string) => void;
@@ -36,29 +12,38 @@ interface Props {
 
 const SearchBar: React.FC<Props> = ({ onSearch }) => {
   const [input, setInput] = useState("");
+  const [triggerSearch, setTriggerSearch] = useState(false);
+
+  // 검색 실행용 useEffect
+  useEffect(() => {
+    if (triggerSearch && input.trim()) {
+      onSearch(input.trim());
+      setTriggerSearch(false); // 재진입 방지
+    }
+  }, [triggerSearch, input, onSearch]);
 
   const handleSearch = () => {
-    if (input.trim()) {
-      onSearch(input.trim());
-    }
+    setTriggerSearch(true); // 버튼 누르면 검색
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSearch();
+      setTriggerSearch(true); // Enter로도 검색
     }
   };
 
   return (
-    <Wrapper>
-      <Input
-        placeholder="강아지 품종 입력 (예: Beagle)"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
-      <Button onClick={handleSearch}>검색</Button>
-    </Wrapper>
+    <SearchContainer>
+      <SearchBox>
+        <Input
+          placeholder="강아지 품종 입력 (예: Beagle)"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <Button onClick={handleSearch}>검색</Button>
+      </SearchBox>
+    </SearchContainer>
   );
 };
 

@@ -14,17 +14,29 @@ const Nav = styled.nav`
   padding: 0 40px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 const Logo = styled.div`
   font-size: 1.4rem;
   font-weight: bold;
   color: #6c63ff;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const Menu = styled.div`
   display: flex;
   gap: 24px;
+
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
 `;
 
 const MenuItem = styled(Link)`
@@ -35,6 +47,10 @@ const MenuItem = styled(Link)`
 
   &:hover {
     color: #6c63ff;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
   }
 `;
 

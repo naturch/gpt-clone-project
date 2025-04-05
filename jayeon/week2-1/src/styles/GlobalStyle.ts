@@ -13,6 +13,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #fefefe;
     color: #333;
+
+    @media (max-width: 768px) {
+    font-size: 90%;
   }
 
   #root {

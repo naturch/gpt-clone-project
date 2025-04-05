@@ -13,6 +13,11 @@ const Card = styled.div`
   flex-direction: column;
   overflow: visible;
   padding: 20px;
+
+  @media (max-width: 768px) {
+    width: 90vw;
+    height: auto;
+  }
 `;
 
 const Img = styled.img`

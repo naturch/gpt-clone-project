@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const MyPupPage: React.FC = () => {
   return (
     <Wrapper>
-      <h1>🐾 My Pup Page (나의 강아지)</h1>
+      <h1>🐾</h1>
     </Wrapper>
   );
 };

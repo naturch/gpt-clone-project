@@ -9,23 +9,27 @@ import {
   fetchBreedInfo,
 } from "../services/dogApi";
 
-const Wrapper = styled.div`
+const PageWrapper = styled.div`
   width: 100vw;
-  min-height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
   background-color: #f9fafb;
-  padding-top: 100px;
-  padding-bottom: 100px;
   overflow-x: hidden;
+  padding-top: 120px;
+  padding-bottom: 80px;
 `;
 
-const Content = styled.div`
+const CenterColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+  width: 100%;
+  max-width: 480px;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    gap: 14px;
+  }
 `;
 
 const Message = styled.p`
@@ -60,7 +64,7 @@ const HomePage: React.FC = () => {
       const info = await fetchDogInfo(breed);
 
       if (!info || info.name.toLowerCase() !== breed.toLowerCase()) {
-        setError(`"${breed}"에 대한 정보를 찾을 수 없습니다 😢`);
+        setError(`"${breed}"에 대한 정보를 찾을 수 없습니다 `);
         setLoading(false);
         return;
       }
@@ -86,15 +90,14 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <Wrapper>
-      <Content>
+    <PageWrapper>
+      <CenterColumn>
         <SearchBar onSearch={handleSearch} />
         {loading && <Message>⏳ 검색 중입니다...</Message>}
         {error && <ErrorText>{error}</ErrorText>}
         {dog && <DogCard dog={dog} />}
-      </Content>
-    </Wrapper>
+      </CenterColumn>
+    </PageWrapper>
   );
 };
-
 export default HomePage;
