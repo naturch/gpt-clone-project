@@ -55,6 +55,7 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  //검색 실행 함수
   const handleSearch = async (breed: string) => {
     setLoading(true);
     setError("");

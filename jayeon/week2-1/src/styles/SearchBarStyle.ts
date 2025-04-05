@@ -12,6 +12,7 @@ export const SearchContainer = styled.div`
   }
 `;
 
+//검색창 + 버튼 박스
 export const SearchBox = styled.div`
   display: flex;
   gap: 8px;
@@ -35,7 +36,7 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   padding: 12px 18px;
-  background: #6c63ff;
+  background: var(--main-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -46,7 +47,7 @@ export const Button = styled.button`
   justify-content: center;
 
   &:hover {
-    background: #574bff;
+    background: var(--main-color-hover);
   }
 
   @media (max-width: 768px) {

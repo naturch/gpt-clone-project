@@ -21,6 +21,7 @@ interface Props {
   temperament: string;
 }
 
+//temperament를 콤마로 나눠서 Badge로 랜더링
 const Temperament: React.FC<Props> = ({ temperament }) => {
   const temperamentList = temperament.split(",").map((t) => t.trim());
 

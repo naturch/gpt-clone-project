@@ -1,34 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DogForm from "../components/DogForm";
-import styled from "styled-components";
 import AddDogButton from "../components/AddDogButton";
 import MyDogCard from "../components/MyDogCard";
 import { Dog } from "../types/dog";
-
-const Wrapper = styled.div`
-  width: 100vw;
-  min-height: 100vh;
-  background-color: #fefefe;
-  padding: 120px 20px 40px;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DogList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 40px;
-`;
+import { Wrapper, DogList } from "../styles/MyPupPageStyle";
 
 const MyPupPage: React.FC = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [dogs, setDogs] = useState<Dog[]>([]);
-  const [editingDog, setEditingDog] = useState<Dog | null>(null);
+  const [showForm, setShowForm] = useState(false); //폼 보여줄지 여부
+  const [dogs, setDogs] = useState<Dog[]>([]); //전체 강아지 목록
+  const [editingDog, setEditingDog] = useState<Dog | null>(null); //수정 중인 강아지 정보
 
+  //마운트 시 localstorage에서 데이터 불러오기
   useEffect(() => {
     const savedDogs = localStorage.getItem("myDogs");
     if (savedDogs) {
@@ -36,6 +18,7 @@ const MyPupPage: React.FC = () => {
     }
   }, []);
 
+  // 추가,수정 버튼 클릭 시 form 보여주기
   const toggleForm = () => {
     setShowForm((prev) => !prev);
   };
@@ -56,7 +39,7 @@ const MyPupPage: React.FC = () => {
   };
 
   const handleDelete = (target: Dog) => {
-    const confirm = window.confirm("정말 삭제하시겠습니까?");
+    const confirm = window.confirm("삭제하시겠습니까?");
     if (confirm) {
       const updated = dogs.filter((dog) => dog.name !== target.name);
       setDogs(updated);
@@ -71,6 +54,7 @@ const MyPupPage: React.FC = () => {
 
   return (
     <Wrapper>
+      {/*폼을 보여줄 때만 렌더링*/}
       {showForm && (
         <DogForm
           onClose={() => {

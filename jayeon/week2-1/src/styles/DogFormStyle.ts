@@ -31,13 +31,14 @@ export const FormContainer = styled.div`
 export const FormTitle = styled.h2`
   text-align: center;
   margin-bottom: 20px;
-  color: #6c63ff;
+  color: var(--main-color);
 `;
 
 export const Label = styled.label`
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
+  color: var(--font-color);
 `;
 
 export const Input = styled.input`
@@ -59,15 +60,14 @@ export const Select = styled.select`
 export const SubmitButton = styled.button`
   width: 100%;
   padding: 12px;
-  background-color: #6c63ff;
+  background-color: var(--main-color);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--border-radius);
   font-size: 1rem;
-  cursor: pointer;
 
   &:hover {
-    background-color: #574bff;
+    background-color: var(--main-color-hover);
   }
 `;
 

@@ -1,18 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import Temperament from "./Temperament";
+import RatingCircle from "./RatingCircle";
 
 const Card = styled.div`
   width: 320px;
   padding: 20px;
   border-radius: 12px;
   background: #fff;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--card-shadow));
   text-align: center;
   display: flex;
   flex-direction: column;
   overflow: visible;
-  padding: 20px;
+  
 
   @media (max-width: 768px) {
     width: 90vw;
@@ -45,8 +46,12 @@ const DogCard: React.FC<Props> = ({ dog }) => {
       <Img src={dog.image} alt={dog.name} />
       <h2>{dog.name}</h2>
       <p>수명: {dog.lifespan}</p>
-      <p>털 빠짐: {dog.shedding}</p>
-      <p>짖는 정도: {dog.barking}</p>
+      <p>
+        털 빠짐<RatingCircle level={Number(dog.shedding)}></RatingCircle>
+      </p>
+      <p>
+        짖는 정도 <RatingCircle level={Number(dog.barking)} />
+      </p>
       <Temperament temperament={dog.temperament} />
     </Card>
   );

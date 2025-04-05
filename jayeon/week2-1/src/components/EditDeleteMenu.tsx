@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+//삭제, 수정 콜백을 props로 받는 컴포넌트
 interface Props {
   onEdit: () => void;
   onDelete: () => void;
@@ -12,8 +13,8 @@ const MenuWrapper = styled.div`
   right: 10px;
   background: #fff;
   border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
   z-index: 10;
 `;
 

@@ -7,12 +7,12 @@ const Nav = styled.nav`
   top: 0;
   width: 100%;
   height: 60px;
-  background-color: #f0f4f8;
+  background-color: #f5f7fa;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   z-index: 1000;
 
   @media (max-width: 768px) {
@@ -23,7 +23,7 @@ const Nav = styled.nav`
 const Logo = styled.div`
   font-size: 1.4rem;
   font-weight: bold;
-  color: #6c63ff;
+  color: var(--main-color);
 
   @media (max-width: 768px) {
     font-size: 1.1rem;
@@ -41,12 +41,12 @@ const Menu = styled.div`
 
 const MenuItem = styled(Link)`
   text-decoration: none;
-  color: #333;
+  color: var(--font-color);
   font-weight: 500;
   transition: all 0.2s;
 
   &:hover {
-    color: #6c63ff;
+    color: var(--main-color);
   }
 
   @media (max-width: 768px) {

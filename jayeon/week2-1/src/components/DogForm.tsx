@@ -14,7 +14,7 @@ import {
 interface DogFormProps {
   onClose: () => void;
   onAddDog: (dog: Dog) => void;
-  editingDog: Dog | null;
+  editingDog: Dog | null; //수정 중인 강아지 데이터(없으면 추가)
 }
 
 const DogForm: React.FC<DogFormProps> = ({ onClose, onAddDog, editingDog }) => {
@@ -27,12 +27,14 @@ const DogForm: React.FC<DogFormProps> = ({ onClose, onAddDog, editingDog }) => {
     personality: "",
   });
 
+  //수정일 경우, 기존 데이터로 초기값 설정
   useEffect(() => {
     if (editingDog) {
       setDogData(editingDog);
     }
   }, [editingDog]);
 
+  //input, select 변경
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
