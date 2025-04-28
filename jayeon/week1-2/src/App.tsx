@@ -90,7 +90,7 @@ interface ForecastItem {
 
 /* 메인 컴포넌트  */
 function App() {
-  /* 📌 상태 정의 */
+  /* 상태 정의 */
   const [city, setCity] = useState("서울");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -136,7 +136,7 @@ function App() {
     }
   };
 
-  /* 검색 엔터터 */
+  /* 검색 엔터 */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setSuggestions([]);
