@@ -1,24 +1,19 @@
-import { ChatItemType } from "../data/SideBarData";
+import { ChatRoom } from "../store/chatState";
 
-// 채팅을 한 날짜를 기준으로 그룹  정해주는는
-function getSectionName(updatedAt: string): string {
+// 채팅을 한 날짜를 기준으로 그룹  정해주는
+function getSectionName(date: Date): string {
   const now = new Date();
-  const updated = new Date(updatedAt);
-
-  const nowYear = now.getFullYear();
-  const updatedYear = updated.getFullYear();
-
-  const diffDays = (now.getTime() - updated.getTime()) / (1000 * 60 * 60 * 24);
+  const diffDays = (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
 
   if (diffDays <= 7) return "지난 7일";
   if (diffDays <= 30) return "지난 30일";
 
-  if (nowYear === updatedYear) {
+  if (now.getFullYear === date.getFullYear) {
     // 같은 해면 month 분류
-    return `${updated.getMonth() + 1}월`;
+    return `${date.getMonth() + 1}월`;
   } else {
     // 다른 해면 year 분류
-    return `${updatedYear}년`;
+    return `${date.getFullYear}년`;
   }
 }
 
@@ -39,23 +34,22 @@ function getDateFromSection(section: string): Date {
     return new Date(year, 0, 1);
   }
 
-  return new Date(0); // 아주 오래된 날짜로 fallback?
+  return new Date(0); // 뭐여
 }
 
-export function groupChatItemsByDate(items: ChatItemType[]) {
-  const grouped: Record<string, ChatItemType[]> = {};
+export function groupChatsByDate(chats: ChatRoom[]) {
+  const grouped: Record<string, ChatRoom[]> = {};
 
-  // for문으로 채팅 하나씩 돌면서 그룹 분류
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    const section = getSectionName(item.updatedAt);
+  chats.forEach((chat) => {
+    const lastMessage = chat.messages[chat.messages.length - 1];
+    if (!lastMessage) return;
 
-    if (!grouped[section]) {
-      grouped[section] = [];
-    }
+    const updatedAt = new Date(Number(lastMessage.id));
+    const section = getSectionName(updatedAt);
 
-    grouped[section].push(item);
-  }
+    if (!grouped[section]) grouped[section] = [];
+    grouped[section].push(chat);
+  });
 
   /*뭔소리야.*/
 
@@ -67,11 +61,10 @@ export function groupChatItemsByDate(items: ChatItemType[]) {
   });
 
   // 다시 객체 형태로 바꿔서 반환
-  const sortedGrouped: Record<string, ChatItemType[]> = {};
-  for (let i = 0; i < sortedEntries.length; i++) {
-    const [section, items] = sortedEntries[i];
+  const sortedGrouped: Record<string, ChatRoom[]> = {};
+  sortedEntries.forEach(([section, items]) => {
     sortedGrouped[section] = items;
-  }
+  });
 
   return sortedGrouped;
 }

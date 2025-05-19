@@ -1,8 +1,18 @@
 import styled from "styled-components";
 import { useRef } from "react";
 
+interface Props {
+  onTypingChange?: (isTyping: boolean) => void;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
 //입력창 (자동높이조절)
-export default function MessageInput() {
+export default function MessageInput({
+  onTypingChange,
+  value,
+  onChange,
+}: Props) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleInput = () => {
@@ -10,6 +20,9 @@ export default function MessageInput() {
     if (textarea) {
       textarea.style.height = "auto";
       textarea.style.height = `${textarea.scrollHeight}px`;
+
+      // 입력 변화를 부모에게 알려줌
+      onTypingChange?.(textarea.value.trim().length > 0);
     }
   };
 
@@ -17,6 +30,8 @@ export default function MessageInput() {
     <InputBox
       ref={textareaRef}
       placeholder="무엇이든 물어보세요"
+      value={value}
+      onChange={onChange}
       rows={1}
       onInput={handleInput}
     />

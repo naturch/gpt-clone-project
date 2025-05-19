@@ -35,12 +35,17 @@ const Wrapper = styled.div`
 `;
 
 const AccountWrapper = styled.div`
+  display: none; //원래는 안보임
   position: relative;
+
+  @media (max-width: 768px) 
+    display: block;
+  }
 `;
 
 const AccountMenu = styled.div`
   position: absolute;
-  bottom: 36px;
+  bottom: 40px;
   left: 0;
   background-color: #2e2f3a;
   border-radius: 6px;

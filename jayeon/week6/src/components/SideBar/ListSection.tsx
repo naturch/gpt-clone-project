@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 interface Props {
   title: string;
-  children: ReactNode; //컴포넌트 내부에 들어갈 코드 (모든 타입 가능)
+  children: ReactNode;
 }
 
 export default function ListSection({ title, children }: Props) {

@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 interface Props {
   label: string;
-  badge?: string; //옵션 ?
+  badge?: string;
   onClick?: () => void;
 }
-//재사용 가능
+
 export default function ListItem({ label, badge, onClick }: Props) {
   return (
     <ItemWrapper onClick={onClick}>

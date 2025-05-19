@@ -1,4 +1,3 @@
-// components/TopBar/TopBar.tsx
 import styled from "styled-components";
 import TopBarButtons from "./TopBarButtons";
 

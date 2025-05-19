@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import ButtonBubble from "../styles/ButtonBubble";
-import WhiteIcon from "../styles/WhiteIcon";
+import { WhiteIcon } from "../styles/IconStyles";
 
 import panelLeftClose from "../../assets/icons/panel-left-close.svg";
 import squarePen from "../../assets/icons/square-pen.svg";
 import search from "../../assets/icons/search.svg";
 
-import { useNavigate } from "react-router-dom"; // 추가
+import { useNavigate } from "react-router-dom";
+import { useChatStore } from "../../store/chatState";
 
 interface Props {
   isOpen: boolean;
@@ -15,32 +16,37 @@ interface Props {
 
 export default function SidebarButtons({ isOpen, onToggle }: Props) {
   const navigate = useNavigate();
-  if (isOpen) {
-    return (
-      //사이드바 열려있을 때
-      <Wrapper>
-        <ButtonBubble tooltipText="사이드바 닫기" position="right">
-          <IconButton onClick={onToggle}>
-            <WhiteIcon src={panelLeftClose} alt="닫기" />
+  const { resetCurrentChatId } = useChatStore();
+
+  if (!isOpen) return null;
+  return (
+    //사이드바 열려있을 때
+    <Wrapper>
+      <ButtonBubble tooltipText="사이드바 닫기" position="right">
+        <IconButton onClick={onToggle}>
+          <WhiteIcon src={panelLeftClose} alt="닫기" />
+        </IconButton>
+      </ButtonBubble>
+
+      <RightGroup>
+        <ButtonBubble tooltipText="채팅 검색" position="bottom">
+          <IconButton>
+            <WhiteIcon src={search} alt="검색" />
           </IconButton>
         </ButtonBubble>
-
-        <RightGroup>
-          <ButtonBubble tooltipText="새 채팅" position="bottom">
-            <IconButton onClick={() => navigate("/")}>
-              <WhiteIcon src={squarePen} alt="새 채팅" />
-            </IconButton>
-          </ButtonBubble>
-
-          <ButtonBubble tooltipText="채팅 검색" position="bottom">
-            <IconButton>
-              <WhiteIcon src={search} alt="검색" />
-            </IconButton>
-          </ButtonBubble>
-        </RightGroup>
-      </Wrapper>
-    );
-  }
+        <ButtonBubble tooltipText="새 채팅" position="bottom">
+          <IconButton
+            onClick={() => {
+              resetCurrentChatId(); //상태초기화
+              navigate("/");
+            }}
+          >
+            <WhiteIcon src={squarePen} alt="새 채팅" />
+          </IconButton>
+        </ButtonBubble>
+      </RightGroup>
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.div`

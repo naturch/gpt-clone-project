@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import ButtonBubble from "../styles/ButtonBubble";
 import IconButton from "../styles/Buttons";
-import WhiteIcon from "../styles/WhiteIcon";
 
 import plusIcon from "../../assets/icons/plus.svg";
 import globeIcon from "../../assets/icons/globe.svg";
@@ -10,58 +9,78 @@ import paletteIcon from "../../assets/icons/palette.svg";
 import ellipsisIcon from "../../assets/icons/ellipsis.svg";
 import micIcon from "../../assets/icons/mic.svg";
 import audioLinesIcon from "../../assets/icons/audio-lines.svg";
+import sendIcon from "../../assets/icons/move-up.svg";
 
-export default function StartScreenInputButtons() {
+import useWindowWidth from "../../hooks/useWindowWidth";
+
+interface Props {
+  isTyping: boolean; //입력중인지
+  onSend: () => void; //전송 버튼 클릭 시
+}
+
+export default function StartScreenInputButtons({ isTyping, onSend }: Props) {
+  const isCompact = useWindowWidth() < 700; //창이 700보다 작은지
+
   return (
     <Wrapper>
       <LeftGroup>
         <ButtonBubble tooltipText="사진 및 파일 추가" position="bottom">
-          <IconButton>
-            <WhiteIcon src={plusIcon} alt="추가" />
-          </IconButton>
+          <IconButton icon={plusIcon} wrappercolor="none" />
         </ButtonBubble>
 
         <ButtonBubble tooltipText="웹에서 검색" position="bottom">
-          <IconButton>
-            <WhiteIcon src={globeIcon} alt="검색" />
-          </IconButton>
+          <IconButton
+            icon={globeIcon}
+            label="검색"
+            showText={!isCompact}
+            wrappercolor="none"
+          />
         </ButtonBubble>
 
         <ButtonBubble
-          tooltipText="어느 토픽이나 상세한 인사이트 생성"
+          tooltipText="디테일한 보고서를 작성하세요"
           position="bottom"
         >
-          <IconButton>
-            <WhiteIcon src={telescopeIcon} alt="심층 리서치" />
-          </IconButton>
+          <IconButton
+            icon={telescopeIcon}
+            label="심층 리서치"
+            showText={!isCompact}
+            wrappercolor="none"
+          />
         </ButtonBubble>
 
-        <ButtonBubble
-          tooltipText="아이디어 및 콘셉트 시각화하기"
-          position="bottom"
-        >
-          <IconButton>
-            <WhiteIcon src={paletteIcon} alt="이미지 그리기" />
-          </IconButton>
+        <ButtonBubble tooltipText="무엇이든 시각화하세요" position="bottom">
+          <IconButton
+            icon={paletteIcon}
+            label="이미지 그리기"
+            showText={!isCompact}
+            wrappercolor="none"
+          />
         </ButtonBubble>
 
         <ButtonBubble tooltipText="도구 보기" position="bottom">
-          <IconButton>
-            <WhiteIcon src={ellipsisIcon} alt="도구" />
-          </IconButton>
+          <IconButton icon={ellipsisIcon} wrappercolor="none" />
         </ButtonBubble>
       </LeftGroup>
 
       <RightGroup>
         <ButtonBubble tooltipText="음성 입력" position="bottom">
-          <IconButton>
-            <WhiteIcon src={micIcon} alt="음성 입력" />
-          </IconButton>
+          <IconButton icon={micIcon} wrappercolor="none" />
         </ButtonBubble>
-
-        <IconButton>
-          <WhiteIcon src={audioLinesIcon} alt="음성 모드" />
-        </IconButton>
+        {/* 입력X= 음성 모드 버튼 , 입력중 = 전송 버튼*/}
+        {!isTyping ? (
+          <ButtonBubble tooltipText="음성모드 사용" position="top">
+            <IconButton icon={audioLinesIcon} wrappercolor="filled" />
+          </ButtonBubble>
+        ) : (
+          <ButtonBubble tooltipText="전송" position="top">
+            <IconButton
+              icon={sendIcon}
+              wrappercolor="filled"
+              onClick={onSend}
+            />
+          </ButtonBubble>
+        )}
       </RightGroup>
     </Wrapper>
   );

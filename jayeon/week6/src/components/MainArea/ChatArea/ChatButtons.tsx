@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import ButtonBubble from "../../styles/ButtonBubble";
 import IconButton from "../../styles/Buttons";
-import WhiteIcon from "../../styles/WhiteIcon";
 
 import copyIcon from "../../../assets/icons/copy.svg";
 import editIcon from "../../../assets/icons/pen-line.svg";
@@ -9,25 +8,21 @@ import likeIcon from "../../../assets/icons/thumbs-up.svg";
 import dislikeIcon from "../../../assets/icons/thumbs-down.svg";
 import speakerIcon from "../../../assets/icons/volume-2.svg";
 
-interface HoverButtonsProps {
+interface ChatButtonsProps {
   sender: "user" | "bot";
 }
 
-export default function HoverButtons({ sender }: HoverButtonsProps) {
+export default function ChatButtons({ sender }: ChatButtonsProps) {
   if (sender === "user") {
     // user
     return (
       <Wrapper>
         <ButtonBubble tooltipText="복사" position="bottom">
-          <IconButton>
-            <WhiteIcon src={copyIcon} alt="복사" />
-          </IconButton>
+          <IconButton icon={copyIcon} wrappercolor="none" />
         </ButtonBubble>
 
         <ButtonBubble tooltipText="메시지 편집" position="bottom">
-          <IconButton>
-            <WhiteIcon src={editIcon} alt="편집" />
-          </IconButton>
+          <IconButton icon={editIcon} wrappercolor="none" />
         </ButtonBubble>
       </Wrapper>
     );
@@ -37,27 +32,19 @@ export default function HoverButtons({ sender }: HoverButtonsProps) {
   return (
     <Wrapper>
       <ButtonBubble tooltipText="복사" position="bottom">
-        <IconButton>
-          <WhiteIcon src={copyIcon} alt="복사" />
-        </IconButton>
+        <IconButton icon={copyIcon} wrappercolor="none" />
       </ButtonBubble>
 
       <ButtonBubble tooltipText="좋은 응답" position="bottom">
-        <IconButton>
-          <WhiteIcon src={likeIcon} alt="좋아요" />
-        </IconButton>
+        <IconButton icon={likeIcon} wrappercolor="none" />
       </ButtonBubble>
 
       <ButtonBubble tooltipText="별로인 응답" position="bottom">
-        <IconButton>
-          <WhiteIcon src={dislikeIcon} alt="싫어요" />
-        </IconButton>
+        <IconButton icon={dislikeIcon} wrappercolor="none" />
       </ButtonBubble>
 
       <ButtonBubble tooltipText="소리 내어 읽기" position="bottom">
-        <IconButton>
-          <WhiteIcon src={speakerIcon} alt="읽기" />
-        </IconButton>
+        <IconButton icon={speakerIcon} wrappercolor="none" />
       </ButtonBubble>
     </Wrapper>
   );

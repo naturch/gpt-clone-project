@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import MessageBubble from "./MessageBubble";
-import { allMessages } from "../../../data/ChatData";
-import { useParams } from "react-router-dom";
+import { useChatStore } from "../../../store/chatState";
 
 export default function ChatArea() {
-  const { chatId } = useParams(); // 주소에서 chatId 추출
+  const currentChatId = useChatStore((state) => state.currentChatId); // 현재 선택된 채팅방 ID
+  const chats = useChatStore((state) => state.chats); // 전체 채팅방 목록
 
-  //chatId에 해당하는 메시지만 필터링
-  const filteredMessages = allMessages.filter((msg) => msg.chatId === chatId);
+  // 현재 선택된 채팅방 찾기
+  const currentChat = chats.find((chat) => chat.id === currentChatId);
+
+  //현재 채팅방 메시지 렌더링
   return (
     <Wrapper>
-      {/* 더미데이터 배열 하나씩 렌더링 */}
-      {filteredMessages.map((msg) => (
+      {currentChat?.messages.map((msg) => (
         <MessageBubble key={msg.id} sender={msg.sender} text={msg.text} />
       ))}
     </Wrapper>
@@ -21,25 +22,12 @@ export default function ChatArea() {
 const Wrapper = styled.div`
   flex: 1;
   padding: 16px;
-  padding-top: 0; // ← TopBar 여백은 ChatLayout이 담당
+  padding-top: 0;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background-color: #343541;
+  background-color: #202123;
   position: relative;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: black;
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
 `;

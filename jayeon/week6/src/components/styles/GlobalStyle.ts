@@ -1,4 +1,3 @@
-// src/styles/GlobalStyle.ts
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -8,28 +7,15 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body, #root {
-    width: 100%;
-    height: 100%;
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #343541; 
-    color: #ffffff;
-    overflow: hidden;
-  }
-
   button {
-    background: none;
-    border: none;
+    all: unset;
     cursor: pointer;
   }
 
-  ul, li {
-    list-style: none;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #343541;
+    color: white;
   }
 `;
 

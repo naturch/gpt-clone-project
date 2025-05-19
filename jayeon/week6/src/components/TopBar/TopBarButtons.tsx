@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import ButtonBubble from "../styles/ButtonBubble";
 import IconButton from "../styles/Buttons";
-import WhiteIcon from "../styles/WhiteIcon";
 
 import sidebarIcon from "../../assets/icons/panel-left-close.svg";
 import squarePenIcon from "../../assets/icons/square-pen.svg";
-import notepadIcon from "../../assets/icons/notepad-text.svg";
-import ellipsisIcon from "../../assets/icons/ellipsis-vertical.svg";
+import chatIcon from "../../assets/icons/message-circle-dashed.svg";
+import uploadIcon from "../../assets/icons/upload.svg";
 import profileIcon from "../../assets/icons/user-round-pen.svg";
-import { allChatItems } from "../../data/SideBarData";
 
-import { useNavigate } from "react-router-dom"; // 추가
+import { useNavigate } from "react-router-dom";
+import useWindowWidth from "../../hooks/useWindowWidth";
+import { useChatStore } from "../../store/chatState";
 
 interface Props {
   isSidebarOpen: boolean;
@@ -23,58 +23,117 @@ export default function TopBarButtons({
   toggleSidebar,
   chatId,
 }: Props) {
-  // chatId에 해당하는 채팅 정보 찾기
-  const currentChat = allChatItems.find((chat) => chat.id === chatId);
-
-  const isProjectChat = !!currentChat?.projectId;
-  const projectName = currentChat?.projectId;
-  const chatTitle = currentChat?.title;
   const navigate = useNavigate();
+  const isChatting = !!chatId;
+  const windowWidth = useWindowWidth();
+  const isCompact = windowWidth < 700;
+  const { resetCurrentChatId } = useChatStore();
+
+  let leftButtons;
+  let rightButtons;
+
+  // 사이드바 열려있을 때
+  if (isSidebarOpen) {
+    //  왼쪽 버튼->모델 버튼만 있음
+    leftButtons = <ModelButton>ChatGPT 4o ⌄</ModelButton>;
+
+    // 오른쪽 버튼
+    rightButtons = (
+      <>
+        <ButtonBubble //채팅화면: 공유하기 버튼 , 시작화면: 임시채팅 버튼
+          tooltipText={isChatting ? "공유하기" : "임시 채팅 토글하기"}
+          position="bottom"
+        >
+          <IconButton
+            icon={isChatting ? uploadIcon : chatIcon}
+            label={isChatting ? "공유하기" : "임시"}
+            wrappercolor="none"
+          />
+        </ButtonBubble>
+        <IconButton icon={profileIcon} wrappercolor="none" />
+      </>
+    );
+  } else if (isCompact) {
+    // 사이드바 닫혀있을 때 &&
+    leftButtons = (
+      <>
+        <ButtonBubble tooltipText="사이드바 열기" position="bottom">
+          <IconButton
+            icon={sidebarIcon}
+            onClick={toggleSidebar}
+            wrappercolor="none"
+          />
+        </ButtonBubble>
+        <ModelButton>ChatGPT 4o ⌄</ModelButton>
+      </>
+    );
+
+    rightButtons = isChatting ? (
+      <ButtonBubble tooltipText="새 채팅" position="bottom">
+        <IconButton
+          icon={squarePenIcon}
+          onClick={() => {
+            resetCurrentChatId(); //새 채팅 클릭 -> 초기화 + 경로 이동
+            navigate("/");
+          }}
+          wrappercolor="none"
+        />
+      </ButtonBubble>
+    ) : (
+      <ButtonBubble tooltipText="임시 채팅 토글하기" position="bottom">
+        <IconButton icon={chatIcon} wrappercolor="none" />
+      </ButtonBubble>
+    );
+  } else {
+    // 사이드바 닫힘 + 데스크탑 뷰
+    leftButtons = (
+      <>
+        <ButtonBubble tooltipText="사이드바 열기" position="bottom">
+          <IconButton
+            icon={sidebarIcon}
+            onClick={toggleSidebar}
+            wrappercolor="none"
+          />
+        </ButtonBubble>
+
+        {isChatting && (
+          <ButtonBubble tooltipText="새 채팅" position="bottom">
+            <IconButton
+              icon={squarePenIcon}
+              onClick={() => {
+                resetCurrentChatId(); //새 채팅 클릭 -> 초기화 + 경로 이동
+                navigate("/");
+              }}
+              wrappercolor="none"
+            />
+          </ButtonBubble>
+        )}
+
+        <ModelButton>ChatGPT 4o ⌄</ModelButton>
+      </>
+    );
+
+    rightButtons = (
+      <>
+        <ButtonBubble
+          tooltipText={isChatting ? "공유하기" : "임시 채팅 토글하기"}
+          position="bottom"
+        >
+          <IconButton
+            icon={isChatting ? uploadIcon : chatIcon}
+            label={isChatting ? "공유하기" : "임시"}
+            wrappercolor="none"
+          />
+        </ButtonBubble>
+        <IconButton icon={profileIcon} wrappercolor="none" />
+      </>
+    );
+  }
 
   return (
     <Wrapper>
-      <LeftGroup>
-        {isSidebarOpen ? (
-          <>
-            {chatId ? (
-              <>
-                {/* 프로젝트 채팅이면 프로젝트명 > 채팅명 */}
-                {isProjectChat && <ProjectBtn>{projectName} &gt;</ProjectBtn>}
-                <ChatTitleBtn>{chatTitle}</ChatTitleBtn>
-                <ModelBtn>4o</ModelBtn>
-              </>
-            ) : (
-              //채팅 목록 선택하지 않은 경우
-              <ChatTitleBtn>ChatGPT</ChatTitleBtn>
-            )}
-          </>
-        ) : (
-          <>
-            <ButtonBubble tooltipText="사이드바 열기" position="bottom">
-              <IconButton onClick={toggleSidebar}>
-                <WhiteIcon src={sidebarIcon} alt="사이드바 열기" />
-              </IconButton>
-            </ButtonBubble>
-            <ButtonBubble tooltipText="새 채팅" position="bottom">
-              <IconButton onClick={() => navigate("/")}>
-                <WhiteIcon src={squarePenIcon} alt="새 채팅" />
-              </IconButton>
-            </ButtonBubble>
-          </>
-        )}
-      </LeftGroup>
-
-      <RightGroup>
-        <IconButton>
-          <WhiteIcon src={notepadIcon} alt="캔버스 열기" />
-        </IconButton>
-        <IconButton>
-          <WhiteIcon src={ellipsisIcon} alt="더보기" />
-        </IconButton>
-        <ProfileBtn>
-          <WhiteIcon src={profileIcon} alt="프로필" />
-        </ProfileBtn>
-      </RightGroup>
+      <LeftGroup>{leftButtons}</LeftGroup>
+      <RightGroup>{rightButtons}</RightGroup>
     </Wrapper>
   );
 }
@@ -99,42 +158,16 @@ const RightGroup = styled.div`
   gap: 10px;
 `;
 
-const ChatTitleBtn = styled.button`
+const ModelButton = styled.button`
   background: transparent;
   color: white;
   border: none;
   font-size: 14px;
   cursor: pointer;
-
-  &:hover {
-    background-color: #2d2d2f;
-    border-radius: 6px;
-  }
-`;
-
-const ModelBtn = styled.div`
-  font-size: 12px;
-  padding: 2px 6px;
+  padding: 4px 8px;
   border-radius: 6px;
-  background-color: #3e3f4b;
-  color: white;
-  height: fit-content;
-`;
-
-const ProfileBtn = styled(IconButton)`
-  background-color: black;
-  border-radius: 50%;
-`;
-
-const ProjectBtn = styled.button`
-  background: transparent;
-  color: #c5c5c5;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
 
   &:hover {
     background-color: #2d2d2f;
-    border-radius: 6px;
   }
 `;

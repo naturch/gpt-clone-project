@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import HoverButtons from "./HoverButtons";
+import ChatButtons from "./ChatButtons";
 
 interface MessageBubbleProps {
   sender: "user" | "bot";
@@ -11,12 +11,8 @@ export default function MessageBubble({ sender, text }: MessageBubbleProps) {
 
   return (
     <Wrapper isUser={isUser}>
-      {/* 말풍선 */}
       <Bubble isUser={isUser}>{text}</Bubble>
-      {/*말풍선 호버 효과 (버튼) */}
-      <HoverWrapper isUser={isUser}>
-        <HoverButtons sender={sender} />
-      </HoverWrapper>
+      <ChatButtons sender={sender} />
     </Wrapper>
   );
 }
@@ -30,13 +26,6 @@ const Wrapper = styled.div<{ isUser: boolean }>`
   padding: 8px 0;
 `;
 
-const HoverWrapper = styled.div<{ isUser: boolean }>`
-  margin-top: 4px;
-  display: flex;
-  gap: 6px;
-  justify-content: ${({ isUser }) => (isUser ? "flex-end" : "flex-start")};
-`;
-
 const Bubble = styled.div<{ isUser: boolean }>`
   max-width: 80%;
   white-space: pre-wrap;
@@ -46,5 +35,5 @@ const Bubble = styled.div<{ isUser: boolean }>`
   font-size: 16px;
   line-height: 1.5;
   color: white;
-  background-color: ${({ isUser }) => (isUser ? "#40414f" : "transparent")};
+  background-color: ${({ isUser }) => (isUser ? "#444654" : "transparent")};
 `;

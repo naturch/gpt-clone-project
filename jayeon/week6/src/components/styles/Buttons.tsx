@@ -1,52 +1,67 @@
 import styled from "styled-components";
-import React from "react";
+import { BlackIcon, WhiteIcon } from "./IconStyles";
 
 interface IconButtonProps {
-  children: React.ReactNode;
-  tooltip?: string;
+  icon: string;
+  label?: string; //버튼에 표시되는 텍스트
   onClick?: () => void;
-  isCircle?: boolean; // 둥근 버튼 or 긴 버튼
+  showText?: boolean; // 버튼에서 아이콘 + 텍스트 or 아이콘만
+  wrappercolor: "none" | "filled"; //버튼 배경
 }
 
 export default function IconButton({
-  children,
-  tooltip,
+  icon,
+  label,
   onClick,
-  isCircle = true,
+  showText = false,
+  wrappercolor,
 }: IconButtonProps) {
+  {
+    /* $ = 스타일 계산용 */
+  }
   return (
-    <ButtonWrapper onClick={onClick} title={tooltip} $isCircle={isCircle}>
-      {children}
+    <ButtonWrapper $variant={wrappercolor} onClick={onClick}>
+      {wrappercolor === "filled" ? (
+        <BlackIcon src={icon} alt="icon" />
+      ) : (
+        <WhiteIcon src={icon} alt="icon" />
+      )}
+      {showText && label && <span>{label}</span>}
     </ButtonWrapper>
   );
 }
 
-const ButtonWrapper = styled.button<{ $isCircle: boolean }>`
+const ButtonWrapper = styled.button<{ $variant: "none" | "filled" }>`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  height: 36px;
 
-  background-color: transparent;
-  color: white;
-  cursor: pointer;
-  border: 1px solid #4a4a4a;
-  transition: background-color 0.2s ease;
-
-  ${({ $isCircle }) =>
-    $isCircle
-      ? `
+  ${({ $variant }) =>
+    $variant === "filled" // 조건별로 버튼래퍼의 색상 다르게
+      ? ` 
     width: 36px;
-    height: 36px;
+    padding: 0;
     border-radius: 50%;
+    background-color: white;
+    border: none;
+    color: black;
+
+    &:hover {
+      background-color: #dedede;
+    }
   `
       : `
-    height: 36px;
     padding: 0 12px;
     border-radius: 18px;
-  `}
+    background-color: transparent;
+    color: white;
+    border: 1px solid #4a4a4a;
+    white-space: nowrap; // 버튼안의 텍스트 안 흘러넘치게
 
-  &:hover {
-    background-color: rgb(87, 88, 100);
-  }
+    &:hover {
+      background-color:rgb(171, 171, 171);
+    }
+  `}
 `;

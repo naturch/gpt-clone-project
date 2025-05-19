@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import SidebarButtons from "./SideBarButtons";
 import FixedList from "./FixedList";
-import ProjectList from "./ProjectList";
 import ChatList from "./ChatList";
 import BottomSection from "./BottomSection";
 
@@ -20,7 +19,6 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
         <>
           <ScrollArea>
             <FixedList />
-            <ProjectList />
             <ChatList />
           </ScrollArea>
           <BottomSection />
@@ -39,9 +37,22 @@ const SidebarWrapper = styled.div<{ isOpen: boolean }>`
   flex-direction: column;
   box-sizing: border-box;
   overflow-x: hidden;
-  transition: transform 0.3s ease, width 0.3s ease;
+  transition: transform 0.3s ease;
+
+  position: relative;
   transform: ${({ isOpen }) =>
     isOpen ? "translateX(0)" : "translateX(-100%)"};
+
+  @media (max-width: 768px) {
+    //768px: 태블릿 크기 ?
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 260px;
+    transform: ${({ isOpen }) =>
+      isOpen ? "translateX(0)" : "translateX(-100%)"};
+  }
 `;
 
 const Header = styled.div`

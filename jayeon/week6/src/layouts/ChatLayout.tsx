@@ -1,4 +1,4 @@
-// 최상위 레이아웃 컴포넌트
+// 사이드바 <->상단바
 import { ReactNode } from "react";
 import styled from "styled-components";
 import Sidebar from "../components/SideBar/SideBar";
@@ -19,13 +19,11 @@ export default function ChatLayout({
 }: Props) {
   return (
     <Wrapper>
-      {/* 사이드바 열려 있을 때만 */}
-      {isSidebarOpen && (
+      {isSidebarOpen && ( //사이드바 열려있으면
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       )}
       <ContentArea>
-        {/* 상단바 MainArea 위에 고정 렌더링  */}
-        <TopBar
+        <TopBar // 상단바는 항상 children 위에 렌더링
           isSidebarOpen={isSidebarOpen}
           toggleSidebar={toggleSidebar}
           chatId={chatId}

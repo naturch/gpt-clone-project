@@ -33,7 +33,7 @@ const positionStyles = {
 
 const Bubble = styled.div<{ position: "right" | "bottom" | "top" }>`
   position: absolute;
-  background-color: #343541;
+  background-color: black;
   color: white;
   font-size: 13px;
   padding: 6px 10px;
