@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import { useChatStore } from "../../store/chatState";
 
+import ModelDropdown from "./ModelDropdown";
+
 interface Props {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
@@ -35,7 +37,7 @@ export default function TopBarButtons({
   // 사이드바 열려있을 때
   if (isSidebarOpen) {
     //  왼쪽 버튼->모델 버튼만 있음
-    leftButtons = <ModelButton>ChatGPT 4o ⌄</ModelButton>;
+    leftButtons = <ModelDropdown />;
 
     // 오른쪽 버튼
     rightButtons = (
@@ -64,7 +66,7 @@ export default function TopBarButtons({
             wrappercolor="none"
           />
         </ButtonBubble>
-        <ModelButton>ChatGPT 4o ⌄</ModelButton>
+        <ModelDropdown />
       </>
     );
 
@@ -109,7 +111,7 @@ export default function TopBarButtons({
           </ButtonBubble>
         )}
 
-        <ModelButton>ChatGPT 4o ⌄</ModelButton>
+        <ModelDropdown />
       </>
     );
 
@@ -156,18 +158,4 @@ const LeftGroup = styled.div`
 const RightGroup = styled.div`
   display: flex;
   gap: 10px;
-`;
-
-const ModelButton = styled.button`
-  background: transparent;
-  color: white;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-
-  &:hover {
-    background-color: #2d2d2f;
-  }
 `;

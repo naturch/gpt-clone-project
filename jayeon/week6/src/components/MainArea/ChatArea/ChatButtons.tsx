@@ -10,15 +10,25 @@ import speakerIcon from "../../../assets/icons/volume-2.svg";
 
 interface ChatButtonsProps {
   sender: "user" | "bot";
+  copytext: string; //복사할 텍스트
 }
 
-export default function ChatButtons({ sender }: ChatButtonsProps) {
+export default function ChatButtons({ sender, copytext }: ChatButtonsProps) {
+  //복사 기능
+  const handleCopy = () => {
+    navigator.clipboard.writeText(copytext);
+  };
+
   if (sender === "user") {
     // user
     return (
       <Wrapper>
         <ButtonBubble tooltipText="복사" position="bottom">
-          <IconButton icon={copyIcon} wrappercolor="none" />
+          <IconButton
+            icon={copyIcon}
+            wrappercolor="none"
+            onClick={handleCopy}
+          />
         </ButtonBubble>
 
         <ButtonBubble tooltipText="메시지 편집" position="bottom">
@@ -32,7 +42,7 @@ export default function ChatButtons({ sender }: ChatButtonsProps) {
   return (
     <Wrapper>
       <ButtonBubble tooltipText="복사" position="bottom">
-        <IconButton icon={copyIcon} wrappercolor="none" />
+        <IconButton icon={copyIcon} wrappercolor="none" onClick={handleCopy} />
       </ButtonBubble>
 
       <ButtonBubble tooltipText="좋은 응답" position="bottom">

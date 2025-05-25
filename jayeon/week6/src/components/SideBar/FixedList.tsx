@@ -13,7 +13,7 @@ export default function FixedList() {
   return (
     <Wrapper>
       {fixedItems.map((item) => (
-        <ListItem key={item.id} label={item.title} badge={item.badge} />
+        <ListItem key={item.id} label={item.title} />
       ))}
     </Wrapper>
   );

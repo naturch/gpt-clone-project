@@ -32,7 +32,7 @@ export default function StartScreenInputButtons({ isTyping, onSend }: Props) {
           <IconButton
             icon={globeIcon}
             label="검색"
-            showText={!isCompact}
+            showText={!isCompact} // isCopact면 텍스트 X
             wrappercolor="none"
           />
         </ButtonBubble>

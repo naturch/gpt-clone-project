@@ -12,7 +12,7 @@ export default function MessageBubble({ sender, text }: MessageBubbleProps) {
   return (
     <Wrapper isUser={isUser}>
       <Bubble isUser={isUser}>{text}</Bubble>
-      <ChatButtons sender={sender} />
+      <ChatButtons sender={sender} copytext={text} />
     </Wrapper>
   );
 }
@@ -36,4 +36,15 @@ const Bubble = styled.div<{ isUser: boolean }>`
   line-height: 1.5;
   color: white;
   background-color: ${({ isUser }) => (isUser ? "#444654" : "transparent")};
+
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeInUp 0.25s ease forwards;
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
