@@ -4,9 +4,13 @@ import styled from "styled-components";
 import Sidebar from "../components/SideBar/SideBar";
 import TopBar from "../components/TopBar/TopBar";
 
+import useDropdown from "../hooks/useDropdown";
+import SearchDropdown from "../components/SideBar/SearchDropdown";
+
 interface Props {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
+  toggleSearch: () => void;
   children: ReactNode; //컴포넌트가 감싸고 있는 내용 덩어리
   chatId?: string;
 }
@@ -17,10 +21,15 @@ export default function ChatLayout({
   chatId,
   children,
 }: Props) {
+  const { open: isSearchOpen, toggle: toggleSearch } = useDropdown();
   return (
     <Wrapper>
       {isSidebarOpen && ( //사이드바 열려있으면
-        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          toggleSearch={toggleSearch}
+        />
       )}
       <ContentArea>
         <TopBar // 상단바는 항상 children 위에 렌더링
@@ -29,6 +38,11 @@ export default function ChatLayout({
           chatId={chatId}
         />
         {children} {/* MainArea 또는 StartScreen */}
+        {isSearchOpen && (
+          <DropdownWrapper>
+            <SearchDropdown />
+          </DropdownWrapper>
+        )}
       </ContentArea>
     </Wrapper>
   );
@@ -47,4 +61,11 @@ const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+`;
+
+const DropdownWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 99;
 `;

@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useChatStore } from "../../store/chatState";
 
-import ellipsisIcon from "../../assets/icons/ellipsis.svg";
-import trashIcon from "../../assets/icons/trash-2.svg";
+import { Ellipsis, Trash2 } from "lucide-react";
 
 import DropdownBox from "../styles/DropdownBox";
 import DropdownItem from "../styles/DropdownItem";
@@ -23,7 +22,7 @@ export default function ListItem({ label, onClick, chatId }: Props) {
       <ItemText onClick={onClick}>{label}</ItemText>
       {chatId && ( //채팅목록인 경우에만 더보기 표시
         <MoreButton onClick={() => setOpenMenu((prev) => !prev)}>
-          <img src={ellipsisIcon} alt="더보기" />
+          <Ellipsis size={16} color="white" />
 
           {openMenu && ( //메뉴 열린 경우 보여줄것들
             <DropdownBox>
@@ -33,7 +32,7 @@ export default function ListItem({ label, onClick, chatId }: Props) {
                   setOpenMenu(false);
                 }}
               >
-                <img src={trashIcon} alt="삭제" />
+                <Trash2 size={16} />
                 삭제
               </DropdownItem>
             </DropdownBox>
@@ -55,7 +54,6 @@ const ItemWrapper = styled.div`
 
   &:hover {
     background-color: #2e2f3a;
-    cursor: pointer;
   }
 `;
 
@@ -71,12 +69,6 @@ const MoreButton = styled.button`
   background: transparent;
   border: none;
   padding: 4px;
-
-  img {
-    width: 16px;
-    height: 16px;
-    filter: invert(1);
-  }
 
   &:hover {
     opacity: 0.7;

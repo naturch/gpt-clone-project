@@ -13,10 +13,10 @@ export default function DropdownItem({ children, onClick }: Props) {
 const Item = styled.div`
   padding: 8px 12px;
   color: white;
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
+  font-size: 14px;
 
   &:hover {
     background-color: #3a3b47;

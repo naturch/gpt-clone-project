@@ -7,12 +7,15 @@ import InputArea from "../components/MainArea/InputArea/InputArea";
 import StartScreen from "../components/StartArea/StartScreen";
 import useWindowWidth from "../hooks/useWindowWidth";
 
+import useDropdown from "../hooks/useDropdown";
+
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const { chatId } = useParams(); //현재chatId 가져옴옴
   const currentPath = useLocation().pathname; // 현재 경로 가져옴
   const windowWidth = useWindowWidth();
+  const { toggle: toggleSearch } = useDropdown();
 
   // 창 너비 700보다 작고 && 사이드바 열려있으면 -> 사이드바 닫힘
   useEffect(() => {
@@ -25,6 +28,7 @@ export default function Home() {
       isSidebarOpen={isSidebarOpen}
       toggleSidebar={toggleSidebar}
       chatId={chatId}
+      toggleSearch={toggleSearch}
     >
       {currentPath.startsWith("/chat") ? ( //경로에 따라 메인 영역 렌더링
         <>

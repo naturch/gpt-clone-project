@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import ButtonBubble from "../styles/ButtonBubble";
-import { WhiteIcon } from "../styles/IconStyles";
+import IconButton from "../styles/IconButton";
 
-import panelLeftClose from "../../assets/icons/panel-left-close.svg";
-import squarePen from "../../assets/icons/square-pen.svg";
-import search from "../../assets/icons/search.svg";
+import { PanelLeftClose, SquarePen, Search } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 import { useChatStore } from "../../store/chatState";
@@ -12,9 +10,14 @@ import { useChatStore } from "../../store/chatState";
 interface Props {
   isOpen: boolean;
   onToggle: () => void; //사이드바 열고 닫는 함수
+  toggleSearch: () => void;
 }
 
-export default function SidebarButtons({ isOpen, onToggle }: Props) {
+export default function SidebarButtons({
+  isOpen,
+  onToggle,
+  toggleSearch,
+}: Props) {
   const navigate = useNavigate();
   const { resetCurrentChatId } = useChatStore();
 
@@ -23,26 +26,30 @@ export default function SidebarButtons({ isOpen, onToggle }: Props) {
     //사이드바 열려있을 때
     <Wrapper>
       <ButtonBubble tooltipText="사이드바 닫기" position="right">
-        <IconButton onClick={onToggle}>
-          <WhiteIcon src={panelLeftClose} alt="닫기" />
-        </IconButton>
+        <IconButton
+          icon={PanelLeftClose}
+          onClick={onToggle}
+          wrappercolor="none"
+        />
       </ButtonBubble>
 
       <RightGroup>
         <ButtonBubble tooltipText="채팅 검색" position="bottom">
-          <IconButton>
-            <WhiteIcon src={search} alt="검색" />
-          </IconButton>
+          <IconButton
+            icon={Search}
+            onClick={toggleSearch}
+            wrappercolor="none"
+          />
         </ButtonBubble>
         <ButtonBubble tooltipText="새 채팅" position="bottom">
           <IconButton
+            icon={SquarePen}
+            wrappercolor="none"
             onClick={() => {
               resetCurrentChatId(); //상태초기화
               navigate("/");
             }}
-          >
-            <WhiteIcon src={squarePen} alt="새 채팅" />
-          </IconButton>
+          />
         </ButtonBubble>
       </RightGroup>
     </Wrapper>
@@ -58,20 +65,4 @@ const Wrapper = styled.div`
 const RightGroup = styled.div`
   display: flex;
   gap: 6px;
-`;
-
-const IconButton = styled.button`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: transparent;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #3a3b47;
-  }
 `;

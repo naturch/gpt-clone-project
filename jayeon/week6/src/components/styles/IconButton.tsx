@@ -1,31 +1,27 @@
 import styled from "styled-components";
-import { BlackIcon, WhiteIcon } from "./IconStyles";
+import { LucideIcon } from "lucide-react";
 
 interface IconButtonProps {
-  icon: string;
+  icon: LucideIcon; //아이콘 컴포넌트 자체
   label?: string; //버튼에 표시되는 텍스트
   onClick?: () => void;
   showText?: boolean; // 버튼에서 아이콘 + 텍스트 or 아이콘만
   wrappercolor: "none" | "filled"; //버튼 배경
+  size?: number;
 }
 
 export default function IconButton({
-  icon,
+  icon: Icon,
   label,
   onClick,
   showText = false,
   wrappercolor,
+  size = 18,
 }: IconButtonProps) {
-  {
-    /* $ = 스타일 계산용 */
-  }
   return (
+    //$: 스타일 계산용
     <ButtonWrapper $variant={wrappercolor} onClick={onClick}>
-      {wrappercolor === "filled" ? (
-        <BlackIcon src={icon} alt="icon" />
-      ) : (
-        <WhiteIcon src={icon} alt="icon" />
-      )}
+      <Icon size={size} color={wrappercolor === "filled" ? "black" : "white"} />
       {showText && label && <span>{label}</span>}
     </ButtonWrapper>
   );

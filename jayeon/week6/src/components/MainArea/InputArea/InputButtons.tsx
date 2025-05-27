@@ -1,13 +1,8 @@
 import styled from "styled-components";
 import ButtonBubble from "../../styles/ButtonBubble";
-import IconButton from "../../styles/Buttons";
+import IconButton from "../../styles/IconButton";
 
-import plusIcon from "../../../assets/icons/plus.svg";
-import globeIcon from "../../../assets/icons/globe.svg";
-import ellipsisIcon from "../../../assets/icons/ellipsis.svg";
-import micIcon from "../../../assets/icons/mic.svg";
-import audioLinesIcon from "../../../assets/icons/audio-lines.svg";
-import sendIcon from "../../../assets/icons/move-up.svg";
+import { Plus, Globe, Ellipsis, Mic, AudioLines, MoveUp } from "lucide-react";
 
 import useWindowWidth from "../../../hooks/useWindowWidth";
 
@@ -23,12 +18,12 @@ export default function InputButtons({ isTyping, onSend }: Props) {
     <Wrapper>
       <LeftGroup>
         <ButtonBubble tooltipText="파일 업로드 및 기타" position="top">
-          <IconButton icon={plusIcon} wrappercolor="none" />
+          <IconButton icon={Plus} wrappercolor="none" />
         </ButtonBubble>
 
         <ButtonBubble tooltipText="웹에서 검색" position="top">
           <IconButton
-            icon={globeIcon}
+            icon={Globe}
             label="검색"
             showText={!isCompact}
             wrappercolor="none"
@@ -36,21 +31,21 @@ export default function InputButtons({ isTyping, onSend }: Props) {
         </ButtonBubble>
 
         <ButtonBubble tooltipText="도구 보기" position="top">
-          <IconButton icon={ellipsisIcon} wrappercolor="none" />
+          <IconButton icon={Ellipsis} wrappercolor="none" />
         </ButtonBubble>
       </LeftGroup>
 
       <RightGroup>
         <ButtonBubble tooltipText="음성 입력" position="top">
-          <IconButton icon={micIcon} wrappercolor="none" />
+          <IconButton icon={Mic} wrappercolor="none" />
         </ButtonBubble>
 
         {!isTyping ? ( //입력하는 순간 전송버튼으로 바뀜
           <ButtonBubble tooltipText="음성모드 사용" position="top">
-            <IconButton icon={audioLinesIcon} wrappercolor="filled" />
+            <IconButton icon={AudioLines} wrappercolor="filled" />
           </ButtonBubble>
         ) : (
-          <IconButton icon={sendIcon} wrappercolor="filled" onClick={onSend} />
+          <IconButton icon={MoveUp} wrappercolor="filled" onClick={onSend} />
         )}
       </RightGroup>
     </Wrapper>

@@ -1,12 +1,8 @@
 import styled from "styled-components";
 import ButtonBubble from "../../styles/ButtonBubble";
-import IconButton from "../../styles/Buttons";
+import IconButton from "../../styles/IconButton";
 
-import copyIcon from "../../../assets/icons/copy.svg";
-import editIcon from "../../../assets/icons/pen-line.svg";
-import likeIcon from "../../../assets/icons/thumbs-up.svg";
-import dislikeIcon from "../../../assets/icons/thumbs-down.svg";
-import speakerIcon from "../../../assets/icons/volume-2.svg";
+import { Copy, PenLine, ThumbsUp, ThumbsDown, Volume2 } from "lucide-react";
 
 interface ChatButtonsProps {
   sender: "user" | "bot";
@@ -24,15 +20,11 @@ export default function ChatButtons({ sender, copytext }: ChatButtonsProps) {
     return (
       <Wrapper>
         <ButtonBubble tooltipText="복사" position="bottom">
-          <IconButton
-            icon={copyIcon}
-            wrappercolor="none"
-            onClick={handleCopy}
-          />
+          <IconButton icon={Copy} wrappercolor="none" onClick={handleCopy} />
         </ButtonBubble>
 
         <ButtonBubble tooltipText="메시지 편집" position="bottom">
-          <IconButton icon={editIcon} wrappercolor="none" />
+          <IconButton icon={PenLine} wrappercolor="none" />
         </ButtonBubble>
       </Wrapper>
     );
@@ -42,19 +34,19 @@ export default function ChatButtons({ sender, copytext }: ChatButtonsProps) {
   return (
     <Wrapper>
       <ButtonBubble tooltipText="복사" position="bottom">
-        <IconButton icon={copyIcon} wrappercolor="none" onClick={handleCopy} />
+        <IconButton icon={Copy} wrappercolor="none" onClick={handleCopy} />
       </ButtonBubble>
 
       <ButtonBubble tooltipText="좋은 응답" position="bottom">
-        <IconButton icon={likeIcon} wrappercolor="none" />
+        <IconButton icon={ThumbsUp} wrappercolor="none" />
       </ButtonBubble>
 
       <ButtonBubble tooltipText="별로인 응답" position="bottom">
-        <IconButton icon={dislikeIcon} wrappercolor="none" />
+        <IconButton icon={ThumbsDown} wrappercolor="none" />
       </ButtonBubble>
 
       <ButtonBubble tooltipText="소리 내어 읽기" position="bottom">
-        <IconButton icon={speakerIcon} wrappercolor="none" />
+        <IconButton icon={Volume2} wrappercolor="none" />
       </ButtonBubble>
     </Wrapper>
   );

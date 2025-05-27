@@ -7,13 +7,22 @@ import BottomSection from "./BottomSection";
 interface SidebarProps {
   isOpen: boolean;
   toggleSidebar: () => void;
+  toggleSearch: () => void;
 }
 
-export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
+export default function Sidebar({
+  isOpen,
+  toggleSidebar,
+  toggleSearch,
+}: SidebarProps) {
   return (
     <SidebarWrapper isOpen={isOpen}>
       <Header>
-        <SidebarButtons isOpen={isOpen} onToggle={toggleSidebar} />
+        <SidebarButtons
+          isOpen={isOpen}
+          onToggle={toggleSidebar}
+          toggleSearch={toggleSearch}
+        />
       </Header>
       {isOpen && (
         <>
